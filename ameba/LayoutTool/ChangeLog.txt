@@ -1,0 +1,22 @@
+ChangeLog:
+20230525  v1.0.0  Initial release.
+20230714  v1.0.1  Add support for amebaDplus.
+20230802  v1.0.2  Update layout move rules for trust zone.
+20230915  v1.0.3  (1) Fix address cannot be adjusted after delete KM4_BD_RAM_TZ section
+				  (2) Adjust boundary rule of KM4_BD_RAM
+				  (3) Add size modification in ld
+				  (4) Adjust code section display
+20230926  v1.0.4  (1) Load merge section address from layout ld
+				  (2) Change PSRAM/Flash size in setting file
+				  (3) Fix code section combox select bug
+				  (4) Fix freeze when opening
+				  (5) Add 20 header for special section
+				  (6) Fix overall movement section KM4_BD_PSRAM_TZ address adjust issue
+				  (7) Fix address change tag and code section move tag coverage issue
+				  (8) Fix adjust address and code section to origin value will rewrite ld file issue
+				  (9) Fix psram end part and sram end part save issue
+20240131  v1.0.5  (1) Sync with SDK structure changes
+				  (2) Add KM0_SRAM_ONLY in KM0_BD_RAM
+				  (3) Fix end address not display bug
+				  (4) After section be deleted, ld maintain section and change length to 0KB
+				  (5) Add prompt for XIP usage

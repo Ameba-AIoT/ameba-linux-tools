@@ -1,0 +1,240 @@
+{
+  "ChipInformation":
+  {
+	  "ChipType":"AmebaLite",
+	  "CoreNameList":["KM4","KR4"],
+	  "LdNameList":["ameba_img2_non_trustzone_CodeXIP_DataPsram.ld",
+	  "ameba_img2_CodeXIP_DataPsram.ld"],
+	  "FlashConfig":"\\component\\soc\\amebalite\\usrcfg\\ameba_flashcfg.c",
+	  "HeapNameList":["KM4_PSRAM_HEAP_EXT","KR4_PSRAM_HEAP_EXT"],
+	  "MenuConfig":"\\menuconfig\\.config",
+	  "XIPNotSetInfo":"CONFIG_XIP_FLASH is not set",
+  },
+  "SpecialTreatment":
+  {
+	"TZExpectSection":"KM4_FLOADER_RAM_S",
+	"PSRAMTZSectionName": "",
+	"SectionNeedOverallMovement": "KM4_BD_PSRAM_TZ",
+	"StartAdressOnlyDecrease":"KM4_BD_RAM",
+	"DSPSectionName":"DSP_BD_PSRAM",
+	"MoveWithText":[".ARM.exidx",".ARM.extab"],
+	"MoveWithTextPattern":"__image2_backtrace_start__",
+	"RSVDIfDSPUseSRAM":"KR4_BOOT_RAM",
+	"DummySectionName":"Dummy",
+	"FixedSectionName":"fixed",
+	"StartAdressOnlyDecreaseOrignAdr":"0x2001_0020",
+	"TrustZones":["KM4_BD_PSRAM_TZ"],
+	"CodeSaveInSRAMIfPSRAMNotUsed":"\n\t\t*(.sramdram.only.text*)",
+	"PSRAMPartStartLabel":"\n\t/* psram part */\n\t.psram_image2.text.data ORIGIN",
+	"SRAMImage2Start":"__sram_image2_start__ = .;",
+	"PSRAMImage2Start":"__psram_image2_start__ = .;",
+	"PSRAMImage2StartCode":["__psram_image2_start__ = .;","__psram_image2_end__ = .;"],
+	"PSRAMSectionLast":"\n\t/* put in the end of psram part */\n\t.psram_heap.start (NOLOAD):\n\t{\n\t\t__psram_heap_buffer_start__ = .;\n\t} > ",
+	"SRAMSectionLast":"\n\t/* put in the end of sram part */\n\t.bdram_heap.start (NOLOAD):\n\t{\n\t\t__bdram_heap_buffer_start__ = .;\n\t} > ",
+	"CodeMoveWithDataInKR4":"*(.boot.ram.data*)",
+	"SectionMoveWithDataInKR4":"\n\t\t__sdata_start__",
+	"DataPatternInKR4":"*(.data*)",
+	"MoveNoLoadWithBSS":[".ram_image2.sbss (NOLOAD)",".ram_image2.bss (NOLOAD)",".ram_image2.bd.data (NOLOAD)",".ram_image2.nocache.data (NOLOAD)",".ram_heap.data (NOLOAD)"],
+	"MoveNoLoadWithBSSPattern":"__bss_start__",
+	"SRAMFixedName":"SRAM 1 RTK fixed",
+	"Need20Header":["KM4_BD_PSRAM","KM4_BD_PSRAM_TZ","KR4_BD_PSRAM","SRAM 1 RTK fixed","KM4_BD_RAM","KM0_BD_RAM","KR4_BD_RAM"],
+	"PSRAMSize":["4MB", "8MB", "16MB", "32MB"],
+	"PSRAMDefaultSize":"8MB",
+	"PSRAMEndAddress":{
+		 4:0x60400000,
+		 8:0x60800000,
+		 16:0x61000000,
+		 32:0x62000000,
+	 },
+	"FlashSize":["4MB", "8MB", "16MB", "32MB"],
+	"FlashDefaultSize": "8MB",
+	"FlashEndAddress":{
+		 4:0x08400000,
+		 8:0x08800000,
+		 16:0x09000000,
+		 32:0x0A000000,
+		 64:0x0C000000,
+	 },
+	 "DSPSection":{
+		 "Name":"DSP",
+		 "StartAddress":0x20010020,
+		 "EndAddress":0x20080000,
+		 "Adjustable":false,
+	 },
+  },
+  "MemorySettings": [
+    {
+	  "MemoryType": "PSRAM",
+	  "StartAddress": 0x60000000,
+	  "EndAddress": 0x60800000
+	},
+    {
+	  "MemoryType": "SRAM",
+	  "StartAddress": 0x20000000,
+	  "EndAddress": 0x200BFFFF
+	},
+    {
+	  "MemoryType": "Flash",
+	  "StartAddress": 0x08000000,
+	  "EndAddress": 0x08800000
+	},
+  ],
+  "MergeMemorySection": [
+	{
+	  "MemoryType": "PSRAM",
+      "MemoryName": "KM4_BD_PSRAM_TZ",
+      "StartAddressMemory":"KM4_BD_PSRAM_TZ_NSC",
+	  "EndAddressMemory":"KM4_BD_PSRAM_TZ_S",
+	  "MergeMemoryNameList":["KM4_BD_PSRAM_TZ_NSC","KM4_BD_PSRAM_TZ_ENTRY","KM4_BD_PSRAM_TZ_S"],
+    },
+	{
+	  "MemoryType": "SRAM",
+	  "MemoryName": "SRAM 1 RTK fixed",
+      "StartAddressMemory":"KR4_ROMBSS_RAM",
+	  "EndAddressMemory":"KM4_BOOTLOADER_RAM_S",
+	  "AddressOnlyCanBeDownAdjust": true,
+	  "SectionNonDeletable": true,
+    },
+	{
+      "MemoryType": "SRAM",
+	  "MemoryName": "KR4_BD_RAM",
+      "StartAddressMemory":"KR4_BOOT_RAM",
+	  "EndAddressMemory":"KR4_BD_RAM",
+	  "MergeMemoryNameList":["KR4_BOOT_RAM","KR4_BD_RAM"],
+    },
+	{
+      "MemoryType": "SRAM",
+	  "MemoryName": "KM4_BD_RAM_TZ",
+      "StartAddressMemory":"KM4_BD_RAM_TZ_NSC",
+	  "EndAddressMemory":"KM4_BD_RAM_TZ_S",
+	  "MergeMemoryNameList":["KM4_BD_RAM_TZ_NSC","KM4_BD_RAM_TZ_ENTRY","KM4_BD_RAM_TZ_S"],
+    },
+  ],
+  "NotAdjustableMemorySection": [
+	  "KR4_BD_RAM",
+	  "KM4_BD_RAM_TZ",
+  ],
+  "CodeSectionSettings": [
+    {
+      "Name": "data",
+      "Code": "*(.data*)",
+	  "ShowContent":"*(.data*)",
+	  "AllowInsert": 0,
+	  "Depend": "text",
+	  "DependCode": "*(.rodata*)",
+	  "DependPosition":"back",
+	  "Locations": [
+        {
+		  "MemoryType": "SRAM",
+          "MemorySectionLabel": "BD_RAM",
+          "CodeSectionLabel":".sram_image2.text.data"
+        },
+        {
+		  "MemoryType": "PSRAM",
+          "MemorySectionLabel": "BD_PSRAM",
+          "CodeSectionLabel": ".psram_image2.text.data"
+        },
+	  ]
+    },
+    {
+      "Name": "timetext",
+      "Code": "*(.timesensitive.text*)",
+	  "ShowContent":"*(.timesensitive.text*)",
+	  "AllowInsert": 0,
+	  "Depend": "text",
+	  "DependCode": "*(.rodata*)",
+	  "DependPosition":"front",
+	  "Locations": [
+        {
+		  "MemoryType": "SRAM",
+          "MemorySectionLabel": "BD_RAM",
+          "CodeSectionLabel": ".sram_image2.text.data"
+        },
+        {
+		  "MemoryType": "PSRAM",
+          "MemorySectionLabel": "BD_PSRAM",
+          "CodeSectionLabel": ".psram_image2.text.data"
+        },
+        {
+		  "MemoryType": "Flash",
+          "MemorySectionLabel": "IMG2_XIP",
+          "CodeSectionLabel": ".xip_image2.text"
+        }
+	  ]
+    },
+    {
+      "Name": "timedata",
+      "Code": "*(.timesensitive.data*)",
+	  "ShowContent": "*(.timesensitive.data*)",
+	  "AllowInsert": 0,
+	  "Depend": "text",
+	  "DependCode": "*(.rodata*)",
+	  "DependPosition":"back",
+	  "Locations": [
+        {
+		  "MemoryType": "SRAM",
+          "MemorySectionLabel": "BD_RAM",
+          "CodeSectionLabel": ".sram_image2.text.data"
+        },
+        {
+		  "MemoryType": "PSRAM",
+          "MemorySectionLabel": "BD_PSRAM",
+          "CodeSectionLabel": ".psram_image2.text.data"
+        }
+	  ]
+    },
+    {
+      "Name": "image2_bss",
+      "Code": "\n\t\t__bss_start__ =",
+	  "ShowContent":"image2_bss",
+	  "AllowInsert": 0,
+	  "OcupyOneSection":true,
+	  "Locations": [
+        {
+		  "MemoryType": "SRAM",
+          "MemorySectionLabel": "BD_RAM",
+          "CodeSectionLabel": ".ram_image2.bss (NOLOAD)"
+        },
+        {
+		  "MemoryType": "PSRAM",
+          "MemorySectionLabel": "BD_PSRAM",
+          "CodeSectionLabel": ".ram_image2.bss (NOLOAD)"
+        }
+	  ]
+    },
+	 {
+      "Name": "text",
+      "Code": "\n\t\t__image2_backtrace_start__ =",
+	  "ShowContent":"*.text",
+	  "AllowInsert": 1,
+	  "OcupyOneSection":true,
+	  "Locations": [
+        {
+		  "MemoryType": "Flash",
+          "MemorySectionLabel": "IMG2_XIP",
+          "CodeSectionLabel": ".xip_image2.text"
+        },
+        {
+		  "MemoryType": "PSRAM",
+          "MemorySectionLabel": "BD_PSRAM",
+          "CodeSectionLabel": ".psram_image2.text.data"
+        }
+	  ]
+    },
+  ],
+  "LdAssertsForCores":[
+	{
+	  "CoreName":"KM4",
+	  "CodePsramDataSram":"\n\nASSERT(__sram_only_start__ == ORIGIN(KM4_RAM_ONLY), \"__sram_only_start__ is changed.\")\nASSERT(__flash_text_start__ == ORIGIN(KM4_IMG2_XIP), \"__flash_text_start__ is changed.\")\nASSERT(__sram_image2_start__ == ORIGIN(KM4_BD_RAM), \"__sram_image2_start__ is changed.\")\nASSERT(__psram_image2_start__ == ORIGIN(KM4_BD_PSRAM), \"__psram_image2_start__ is changed.\")\nASSERT(__image2_entry_func__ == ORIGIN(KM4_BOOT_RAM), \"__image2_entry_func__ is not KM4_BOOT_RAM.\")\n\n__km4_sram_heap_extend_start__ = ORIGIN(KM4_HEAP_EXT);\n__km4_sram_heap_extend_size__ = LENGTH(KM4_HEAP_EXT);\n\n__bdram_heap_buffer_size__ = ORIGIN(KM4_BD_RAM) + LENGTH(KM4_BD_RAM) - __bdram_heap_buffer_start__;\n__psram_heap_buffer_size__ = ORIGIN(KM4_BD_PSRAM) + LENGTH(KM4_BD_PSRAM) - __psram_heap_buffer_start__;\n\n__psram_heap_extend_start__ = ORIGIN(KM4_PSRAM_HEAP_EXT);\n__psram_heap_extend_size__ = LENGTH(KM4_PSRAM_HEAP_EXT);",
+	  "CodeXIPDataPsram":"\n\nASSERT(__sram_only_start__ == ORIGIN(KM4_RAM_ONLY), \"__sram_only_start__ is changed.\")\nASSERT(__flash_text_start__ == ORIGIN(KM4_IMG2_XIP), \"__flash_text_start__ is changed.\")\nASSERT(__sram_image2_start__ == ORIGIN(KM4_BD_RAM), \"__sram_image2_start__ is changed.\")\nASSERT(__psram_image2_start__ == ORIGIN(KM4_BD_PSRAM), \"__psram_image2_start__ is changed.\")\nASSERT(__image2_entry_func__ == ORIGIN(KM4_BOOT_RAM), \"__image2_entry_func__ is not KM4_BOOT_RAM.\")\n\n__km4_sram_heap_extend_start__ = ORIGIN(KM4_HEAP_EXT);\n__km4_sram_heap_extend_size__ = 0;\n\n__bdram_heap_buffer_size__ = 0;\n__psram_heap_buffer_size__ = ORIGIN(KM4_BD_PSRAM) + LENGTH(KM4_BD_PSRAM) - __psram_heap_buffer_start__;\n\n__psram_heap_extend_start__ = ORIGIN(KM4_PSRAM_HEAP_EXT);\n__psram_heap_extend_size__ = LENGTH(KM4_PSRAM_HEAP_EXT);",
+	  "XIP":"\r\n\r\nASSERT(__sram_only_start__ == ORIGIN(KM4_RAM_ONLY), \"__sram_only_start__ is changed.\")\r\nASSERT(__flash_text_start__ == ORIGIN(KM4_IMG2_XIP), \"__flash_text_start__ is changed.\")\r\nASSERT(__sram_image2_start__ == ORIGIN(KM4_BD_RAM), \"__sram_image2_start__ is changed.\")\r\n__psram_image2_start__ = .;\r\nASSERT(__image2_entry_func__ == ORIGIN(KM4_BOOT_RAM), \"__image2_entry_func__ is not KM4_BOOT_RAM.\")\r\n\r\n__km4_sram_heap_extend_start__ = ORIGIN(KM4_HEAP_EXT);\r\n__km4_sram_heap_extend_size__ = LENGTH(KM4_HEAP_EXT);\r\n\r\n__bdram_heap_buffer_size__ = ORIGIN(KM4_BD_RAM) + LENGTH(KM4_BD_RAM) - __bdram_heap_buffer_start__;\r\n\r\n__psram_heap_buffer_start__ = .;\r\n__psram_heap_buffer_size__ = 0;\r\n\r\n__psram_heap_extend_start__ = .;\r\n__psram_heap_extend_size__ = 0;\r\n",
+	},
+	{
+	  "CoreName":"KR4",
+	  "CodePsramDataSram":"\n\nASSERT( __boot_text_end__ == ORIGIN(KR4_BOOT_RAM) + LENGTH(KR4_BOOT_RAM), \"__boot_text_end__ is changed.\")\nASSERT( __sram_only_start__ == ORIGIN(KR4_RAM_ONLY), \"__sram_only_start__ is changed.\")\nASSERT( __flash_text_start__ == ORIGIN(KR4_IMG2_XIP), \"__flash_text_start__ is changed.\")\nASSERT(__sram_image2_start__ == ORIGIN(KR4_BD_RAM), \"__sram_image2_start__ is changed.\")\nASSERT( __psram_image2_start__ == ORIGIN(KR4_BD_PSRAM), \"__psram_image2_start__ is changed.\")\n\n__bdram_heap_buffer_size__ = ORIGIN(KR4_BD_RAM) + LENGTH(KR4_BD_RAM) - __bdram_heap_buffer_start__;\n__psram_heap_buffer_size__ = ORIGIN(KR4_BD_PSRAM) + LENGTH(KR4_BD_PSRAM) - __psram_heap_buffer_start__;\n__global_pointer$ = MIN(__sdata_start__ + 0x800, __sbss_end__);\n\n__psram_heap_extend_start__ = ORIGIN(KR4_PSRAM_HEAP_EXT);\n__psram_heap_extend_size__ = LENGTH(KR4_PSRAM_HEAP_EXT);",
+	  "CodeXIPDataPsram":"\n\nASSERT( __boot_text_end__ == ORIGIN(KR4_BOOT_RAM) + LENGTH(KR4_BOOT_RAM), \"__boot_text_end__ is changed.\")\nASSERT( __sram_only_start__ == ORIGIN(KR4_RAM_ONLY), \"__sram_only_start__ is changed.\")\nASSERT( __flash_text_start__ == ORIGIN(KR4_IMG2_XIP), \"__flash_text_start__ is changed.\")\nASSERT(__sram_image2_start__ == ORIGIN(KR4_BD_RAM), \"__sram_image2_start__ is changed.\")\nASSERT( __psram_image2_start__ == ORIGIN(KR4_BD_PSRAM), \"__psram_image2_start__ is changed.\")\n\n__bdram_heap_buffer_size__ = 0;\n__psram_heap_buffer_size__ = ORIGIN(KR4_BD_PSRAM) + LENGTH(KR4_BD_PSRAM) - __psram_heap_buffer_start__;\n__global_pointer$ = MIN(__sdata_start__ + 0x800, __sbss_end__);\n\n__psram_heap_extend_start__ = ORIGIN(KR4_PSRAM_HEAP_EXT);\n__psram_heap_extend_size__ = LENGTH(KR4_PSRAM_HEAP_EXT);",
+	  "XIP":"\r\n\r\nASSERT( __boot_text_end__ == ORIGIN(KR4_BOOT_RAM) + LENGTH(KR4_BOOT_RAM), \"__boot_text_end__ is changed.\")\r\nASSERT( __sram_only_start__ == ORIGIN(KR4_RAM_ONLY), \"__sram_only_start__ is changed.\")\r\nASSERT( __flash_text_start__ == ORIGIN(KR4_IMG2_XIP), \"__flash_text_start__ is changed.\")\r\nASSERT(__sram_image2_start__ == ORIGIN(KR4_BD_RAM), \"__sram_image2_start__ is changed.\")\r\n__psram_image2_start__ = .;\r\n\r\n__bdram_heap_buffer_size__ = ORIGIN(KR4_BD_RAM) + LENGTH(KR4_BD_RAM) - __bdram_heap_buffer_start__;\r\n__global_pointer$ = MIN(__sdata_start__ + 0x800, __sbss_end__);\r\n\r\n__psram_heap_buffer_start__ = .;\r\n__psram_heap_buffer_size__ = 0;\r\n\r\n__psram_heap_extend_start__ = .;\r\n__psram_heap_extend_size__ = 0;\r\n",
+	},
+  ]
+}
+
