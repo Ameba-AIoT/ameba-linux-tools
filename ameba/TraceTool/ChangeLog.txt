@@ -70,3 +70,11 @@ ChangeLog:
 20250507  v2.1.34 (1) Add support to auto close serial port in download mode
                   (2) Fix read/write wifi mac/bb/rf reg issue
 20250512  v2.1.35 Fix auto script keywords false match issue
+20250605  v2.1.36 Add support for serial port hot-plug
+20250703  v2.1.37 Add support for serial port dtr/rts setting
+20250723  v2.1.38 (1) Add support for diagnose
+                  (2) Add export feature for diagnose
+20260205  v2.1.39 (1) Update eFuse AT cmds
+                  (2) Fix log window auto scroll issue
+                  (3) Fine tune GUI
+20260212  v2.1.40 Fix crash issue on unplug or replug
